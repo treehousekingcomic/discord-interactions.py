@@ -1,7 +1,7 @@
 import typing
 
 import discord
-from discord import AllowedMentions, File, InvalidArgument, abc, http, utils
+from discord import AllowedMentions, File, abc, http, utils
 from discord.ext import commands
 from discord.http import Route
 
@@ -214,7 +214,7 @@ async def send(
         Sending the message failed.
     ~discord.Forbidden
         You do not have the proper permissions to send the message.
-    ~discord.InvalidArgument
+    ~discord.TypeError
         The ``files`` list is not of the appropriate size,
         you specified both ``file`` and ``files``,
         or the ``reference`` object is not a :class:`~discord.Message`
@@ -249,16 +249,16 @@ async def send(
         try:
             reference = reference.to_message_reference_dict()
         except AttributeError:
-            raise InvalidArgument(
-                "reference parameter must be Message or MessageReference"
+            raise TypeError(
+                "Reference parameter must be of Message or MessageReference object"
             ) from None
 
     if file is not None and files is not None:
-        raise InvalidArgument("cannot pass both file and files parameter to send()")
+        raise TypeError("Cannot pass both file and files parameters to send()")
 
     if file is not None:
         if not isinstance(file, File):
-            raise InvalidArgument("file parameter must be File")
+            raise TypeError("File parameter must be of File object")
 
         try:
             data = await state.http.send_files(
@@ -277,9 +277,9 @@ async def send(
 
     elif files is not None:
         if len(files) > 10:
-            raise InvalidArgument("files parameter must be a list of up to 10 elements")
+            raise TypeError("Files parameter must be a list of less than 10")
         elif not all(isinstance(file, File) for file in files):
-            raise InvalidArgument("files parameter must be a list of File")
+            raise TypeError("Files parameter must be a list of File objects")
 
         try:
             data = await state.http.send_files(
