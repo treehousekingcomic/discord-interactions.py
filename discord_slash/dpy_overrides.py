@@ -91,7 +91,7 @@ def send_files(
 
     return self.request(r, form=form, files=files)
 
-"""
+
 def send_message(
     self,
     channel_id,
@@ -132,8 +132,7 @@ def send_message(
 
     return self.request(r, json=payload)
 
-http.HTTPClient.send_message = send_message
-"""
+#http.HTTPClient.send_message = send_message
 http.HTTPClient.send_files = send_files
 
 
@@ -327,4 +326,4 @@ async def send_override(context_or_channel, *args, **kwargs):
     return await send(channel, *args, **kwargs)
 
 
-abc.Messageable.send = send_override
+#abc.Messageable.send = send_override
