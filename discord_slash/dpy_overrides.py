@@ -57,7 +57,8 @@ def send_files(
     if content:
         payload["content"] = content
     if embed:
-        payload["embed"] = embed
+        # Make list
+        payload["embeds"] = [embed]
     if components:
         payload["components"] = components
     if nonce:
