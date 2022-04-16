@@ -116,7 +116,8 @@ def send_message(
         payload["tts"] = True
 
     if embed:
-        payload["embed"] = embed
+        # Make list
+        payload["embeds"] = [embed]
     print(f"embed in http send_message overwrite:\n```\n{embed}\n```\ncurrent payload:\n```\n{payload}\n```")
 
     if components:
@@ -227,7 +228,6 @@ async def send(
     :class:`~discord.Message`
         The message that was sent.
     """
-    print("overwritten send")
 
     channel = await self._get_channel()
     state = self._state
@@ -318,7 +318,6 @@ async def send(
 
 
 async def send_override(context_or_channel, *args, **kwargs):
-    print("send_override")
     if isinstance(context_or_channel, commands.Context):
         channel = context_or_channel.channel
     else:
