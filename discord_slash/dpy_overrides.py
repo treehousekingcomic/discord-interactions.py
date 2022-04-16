@@ -115,6 +115,7 @@ def send_message(
 
     if embed:
         payload["embed"] = embed
+    print(f"embed in http send_message overwrite:\n```\n{embed}\n```\ncurrent payload:\n```\n{payload}\n```")
 
     if components:
         payload["components"] = components
