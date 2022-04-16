@@ -107,7 +107,6 @@ def send_message(
 ):
     r = Route("POST", "/channels/{channel_id}/messages", channel_id=channel_id)
     payload = {}
-    print("overwritten http send_message")
 
     if content:
         payload["content"] = content
@@ -118,7 +117,6 @@ def send_message(
     if embed:
         # Make list
         payload["embeds"] = [embed]
-    print(f"embed in http send_message overwrite:\n```\n{embed}\n```\ncurrent payload:\n```\n{payload}\n```")
 
     if components:
         payload["components"] = components
