@@ -106,6 +106,7 @@ def send_message(
 ):
     r = Route("POST", "/channels/{channel_id}/messages", channel_id=channel_id)
     payload = {}
+    print("overwritten http send_message")
 
     if content:
         payload["content"] = content
@@ -226,6 +227,7 @@ async def send(
     :class:`~discord.Message`
         The message that was sent.
     """
+    print("overwritten send")
 
     channel = await self._get_channel()
     state = self._state
@@ -316,6 +318,7 @@ async def send(
 
 
 async def send_override(context_or_channel, *args, **kwargs):
+    print("send_override")
     if isinstance(context_or_channel, commands.Context):
         channel = context_or_channel.channel
     else:
