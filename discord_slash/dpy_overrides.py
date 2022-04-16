@@ -132,7 +132,7 @@ def send_message(
 
     return self.request(r, json=payload)
 
-#http.HTTPClient.send_message = send_message
+http.HTTPClient.send_message = send_message
 http.HTTPClient.send_files = send_files
 
 
