@@ -61,7 +61,7 @@ def send_files(
         # Make list
         payload["embeds"] = [embed]
     if embeds:
-        payload["embeds"] = embed
+        payload["embeds"] = embeds
     if components:
         payload["components"] = components
     if nonce:
@@ -123,7 +123,7 @@ def send_message(
         payload["embeds"] = [embed]
         
     if embeds:
-        payload["embeds"] = embed
+        payload["embeds"] = embeds
 
     if components:
         payload["components"] = components
