@@ -124,7 +124,7 @@ def send_message(
     print(f"debug| embeds list: {embdes}")
     if embeds:
         payload["embeds"] = embeds
-    print(f"payload after embdes: {payload}")
+    print(f"debug| payload after embdes: {payload}")
     if components:
         payload["components"] = components
 
