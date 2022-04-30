@@ -249,7 +249,7 @@ async def send(
     if embed is not None:
         embed = embed.to_dict()
     if embeds is not None:
-        embdes = [e.to_dict() for e in embeds]
+        embeds = [e.to_dict() for e in embeds]
 
     if allowed_mentions is not None:
         if state.allowed_mentions is not None:
