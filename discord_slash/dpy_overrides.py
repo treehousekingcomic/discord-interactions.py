@@ -45,6 +45,7 @@ def send_files(
     content=None,
     tts=False,
     embed=None,
+    embdes=None,
     components=None,
     nonce=None,
     allowed_mentions=None,
@@ -59,6 +60,8 @@ def send_files(
     if embed:
         # Make list
         payload["embeds"] = [embed]
+    if embeds:
+        payload["embeds"] = embed
     if components:
         payload["components"] = components
     if nonce:
@@ -100,6 +103,7 @@ def send_message(
     *,
     tts=False,
     embed=None,
+    embeds=None,
     components=None,
     nonce=None,
     allowed_mentions=None,
@@ -117,6 +121,9 @@ def send_message(
     if embed:
         # Make list
         payload["embeds"] = [embed]
+        
+    if embeds:
+        payload["embeds"] = embed
 
     if components:
         payload["components"] = components
@@ -142,6 +149,7 @@ async def send(
     *,
     tts=False,
     embed=None,
+    embeds=None,
     file=None,
     components=None,
     files=None,
@@ -175,6 +183,8 @@ async def send(
         Indicates if the message should be sent using text-to-speech.
     embed: :class:`~discord.Embed`
         The rich embed for the content.
+    embeds: List[:class:`Embed`]
+        A list of embeds the message has.
     file: :class:`~discord.File`
         The file to upload.
     files: List[:class:`~discord.File`]
@@ -219,7 +229,8 @@ async def send(
         The ``files`` list is not of the appropriate size,
         you specified both ``file`` and ``files``,
         or the ``reference`` object is not a :class:`~discord.Message`
-        or :class:`~discord.MessageReference`.
+        or :class:`~discord.MessageReference`, 
+        or You specified both ``embed`` and ``embeds``
 
     Returns
     ---------
@@ -231,8 +242,14 @@ async def send(
     state = self._state
     content = str(content) if content is not None else None
     components = components or []
+    
+    if embed is not None and embeds is not None:
+        raise TypeError("Canot pass both embed and embeds parameters to send()")
+
     if embed is not None:
         embed = embed.to_dict()
+    if embeds is not None:
+        embdes = [e.to_dict() for e in embeds]
 
     if allowed_mentions is not None:
         if state.allowed_mentions is not None:
@@ -269,6 +286,7 @@ async def send(
                 content=content,
                 tts=tts,
                 embed=embed,
+                embeds=embeds,
                 nonce=nonce,
                 components=components,
                 message_reference=reference,
@@ -289,6 +307,7 @@ async def send(
                 content=content,
                 tts=tts,
                 embed=embed,
+                embeds=embeds,
                 nonce=nonce,
                 allowed_mentions=allowed_mentions,
                 components=components,
@@ -303,6 +322,7 @@ async def send(
             content,
             tts=tts,
             embed=embed,
+            embeds=embeds,
             components=components,
             nonce=nonce,
             allowed_mentions=allowed_mentions,
